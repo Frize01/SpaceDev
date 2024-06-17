@@ -1,0 +1,16 @@
+localhost:80 {
+    root * /var/www/html
+    encode gzip zstd
+    php_fastcgi php:9000
+    file_server
+}
+
+# Uncomment the following block to enable HTTPS locally
+# Note: This requires self-signed certificates or other setup for local HTTPS
+
+localhost:443 {
+    root * /var/www/html
+    encode gzip zstd
+    php_fastcgi php:9000
+    file_server
+}
