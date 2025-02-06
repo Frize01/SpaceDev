@@ -1,44 +1,28 @@
-version: '3.9'
-
 services:
-  php:
-    build:
-      context: ./
-      dockerfile: Dockerfile
-    volumes:
-      - ./projects:/var/www/html
-    user: "${UID}:${GID}"
-    networks:
-      - app-network
-
-  mysql:
-    image: mysql:8.0
+  db:
+    image: mariadb:latest
+    container_name: mariadb
+    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: mydatabase
-      MYSQL_USER: myuser
-      MYSQL_PASSWORD: mypassword
-    volumes:
-      - mysql-data:/var/lib/mysql
-    networks:
-      - app-network
-
-  caddy:
-    image: caddy:alpine
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
-      - ./projects:/var/www/html
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
     ports:
-      - "80:80"
-      - "443:443"
-      - "443:443/udp"
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    ports:
+      - "8080:80"
     depends_on:
-      - php
-    networks:
-      - app-network
+      - db
 
 volumes:
-  mysql-data:
-
-networks:
-  app-network:
+  mariadb_data:
