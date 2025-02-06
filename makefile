@@ -12,6 +12,9 @@ down:
 down-v:
 	UID=$(id -u) GID=$(id -g) docker compose down -v
 
+mail-hog:
+	docker run -p 8025:8025 -p 1025:1025 mailhog/mailhog
+
 help:
 	@echo "Commands:"
 	@echo "  build   - Build the Docker images"
