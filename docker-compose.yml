@@ -2,15 +2,19 @@ services:
   db:
     image: mariadb:latest
     container_name: mariadb
-    restart: always
+    # restart: always
+    user: "${UID}:${GID}"
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: user
       MYSQL_PASSWORD: password
-    ports:
-      - "3306:3306"
     volumes:
-      - mariadb_data:/var/lib/mysql
+      - ./bdd:/var/lib/mysql
+    ports:
+      - "3306:3306"  # Expose le port sur l'hôte
+    networks:
+      - db_network
+    command: --bind-address=0.0.0.0  # Autorise les connexions externes
 
   phpmyadmin:
     image: phpmyadmin
@@ -23,6 +27,12 @@ services:
       - "8080:80"
     depends_on:
       - db
+    networks:
+      - db_network
 
 volumes:
   mariadb_data:
+
+networks:
+  db_network:
+    driver: bridge
