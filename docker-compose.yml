@@ -30,6 +30,29 @@ services:
     networks:
       - db_network
 
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    user: "${UID}:${GID}"
+    ports:
+       - "8080:8080"
+    volumes:
+       - ./open-webui_data:/app/backend/data
+    environment:
+      - OLLAMA_BASE_URL=http://localhost:11434
+    extra_hosts:
+       - "host.docker.internal:host-gateway"
+    restart: always
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog
+    # restart: always
+    ports:
+      - "8025:8025"  # Interface Web
+      - "1025:1025"  # Serveur SMTP
+    networks:
+      - db_network
 volumes:
   mariadb_data:
 
