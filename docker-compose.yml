@@ -35,9 +35,7 @@ services:
     container_name: open-webui
     user: "${UID}:${GID}"
     ports:
-       - "8080:8080"
-    volumes:
-       - ./open-webui_data:/app/backend/data
+       - "4040:8080"
     environment:
       - OLLAMA_BASE_URL=http://localhost:11434
     extra_hosts:
@@ -53,6 +51,28 @@ services:
       - "1025:1025"  # Serveur SMTP
     networks:
       - db_network
+
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+  mongo-express:
+    image: mongo-express
+    # restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+      ME_CONFIG_BASICAUTH: false
+
+
 volumes:
   mariadb_data:
 
