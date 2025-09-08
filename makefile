@@ -19,7 +19,14 @@ open-webui:
 	docker run -d -p 4040:8080 --add-host=host.docker.internal:host-gateway --env-file .env --user $(id -u):$(id -g) -v ./open-webui_data:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:main
 
 phpmyadmin:
-	docker run --name phpmyadmin --rm -d --add-host=host.docker.internal:host-gateway -e PMA_HOST=host.docker.internal -p 8080:80 --platform linux/amd64 phpmyadmin:latest
+	docker run --name phpmyadmin --rm -d --add-host=host.docker.internal:host-gateway -e PMA_HOST=host.docker.internal -p 4976:80 --platform linux/amd64 phpmyadmin:latest
+
+portainer:
+	docker run -d -p 9443:9443 --name portainer --restart=always \
+		-v /var/run/docker.sock:/var/run/docker.sock \
+		-v ./portainer_data:/data \
+		portainer/portainer-ce:latest
+
 
 help:
 	@echo "Commands:"
@@ -28,3 +35,4 @@ help:
 	@echo "  down    - Stop the Docker containers"
 	@echo "  down-v  - Stop the Docker containers and remove volumes"
 	@echo "  help    - Display this help message"
+
