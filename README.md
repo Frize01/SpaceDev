@@ -59,6 +59,27 @@ networks:
     external: true
 ```
 
+## ⚠️ Windows - Configuration DNS
+
+Les sous-domaines `.localhost` ne sont pas résolus automatiquement sur Windows.
+
+Ouvrir **en administrateur** :
+```
+C:\Windows\System32\drivers\etc\hosts
+```
+
+Ajouter :
+```
+127.0.0.1   traefik.localhost
+127.0.0.1   portainer.localhost
+127.0.0.1   mail.localhost
+```
+
+> Chaque nouveau projet nécessite une nouvelle entrée.
+
+> Sur **Linux** et **macOS**, rien à faire, ça marche tout seul. ✅
+
+
 ## 👥 Contributeurs
 
 - Frize
