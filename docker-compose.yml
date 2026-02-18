@@ -47,8 +47,35 @@ services:
     networks:
       - traefik
 
+  code-server:
+    image: lscr.io/linuxserver/code-server:latest
+    container_name: code-server
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Paris
+      - PASSWORD=dev          # mot de passe pour accéder à l'UI
+      - SUDO_PASSWORD=dev     # sudo dans le terminal intégré
+      - PROXY_DOMAIN=code.localhost
+      - DEFAULT_WORKSPACE=/workspace
+    volumes:
+      - ./code/workspace:/workspace
+      - ./code/code-server-config:/config
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.code.rule=Host(`code.localhost`)"
+      - "traefik.http.services.code.loadbalancer.server.port=8443"
+    networks:
+      - traefik
+    profiles:
+      - ide
+
+
+
+
 volumes:
   portainer_data:
+  code-server-config:
 
 networks:
   traefik:

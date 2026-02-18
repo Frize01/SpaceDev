@@ -1,4 +1,4 @@
-# 🛠️ Dev Stack
+# Dev Stack
 
 Environnement de développement local partagé entre tous les projets.
 
@@ -24,7 +24,7 @@ docker compose up -d
 | Portainer | http://portainer.localhost | GUI Docker |
 | MailHog | http://mail.localhost | Catch-all emails |
 
-## 📧 MailHog - Config SMTP pour vos projets
+## MailHog - Config SMTP pour vos projets
 
 | Paramètre | Valeur |
 |-----------|--------|
@@ -59,7 +59,7 @@ networks:
     external: true
 ```
 
-## ⚠️ Windows - Configuration DNS
+## Windows - Configuration DNS
 
 Les sous-domaines `.localhost` ne sont pas résolus automatiquement sur Windows.
 
@@ -79,7 +79,24 @@ Ajouter :
 
 > Sur **Linux** et **macOS**, rien à faire, ça marche tout seul. ✅
 
+### Commandes utiles
 
-## 👥 Contributeurs
+```bash
+# Démarrer
+docker compose up -d
+
+# Arrêter
+docker compose down
+
+# Voir les logs
+docker compose logs -f
+
+# Logs d'un service
+docker compose logs -f traefik
+
+# Redémarrer un service
+docker compose restart traefik
+```
+## Contributeurs
 
 - Frize
