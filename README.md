@@ -85,8 +85,14 @@ Ajouter :
 # Démarrer
 docker compose up -d
 
+# Démarrer avec VS Code (si pas d'IDE)
+docker compose --profile ide up -d
+
 # Arrêter
 docker compose down
+
+# Arrêter (avec le profil ide)
+docker compose --profile ide down
 
 # Voir les logs
 docker compose logs -f
@@ -96,6 +102,7 @@ docker compose logs -f traefik
 
 # Redémarrer un service
 docker compose restart traefik
+
 ```
 ## Contributeurs
 
